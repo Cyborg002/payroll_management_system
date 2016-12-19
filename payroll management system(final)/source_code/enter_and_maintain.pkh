@@ -1,0 +1,70 @@
+CONNECT salary_mgmt/dbase@XE;
+CREATE OR REPLACE PACKAGE enter_and_maintain
+AS
+  PROCEDURE enter_and_maintain_department(
+      p_department_id      IN NUMBER,--It is provided only at the time of update not at time of insert
+      p_department_name    IN VARCHAR2,
+      p_department_head_id IN NUMBER,
+      p_mode               IN VARCHAR2 );
+  PROCEDURE enter_and_maintain_employee(
+      p_employee_id        IN NUMBER,--It is provided only at the time of update not at time of insert
+      p_first_name         IN VARCHAR2,
+      p_last_name          IN VARCHAR2,
+      p_date_of_birth      IN DATE,
+      p_employee_type      IN VARCHAR2,
+      p_designation        IN VARCHAR2,
+      p_email              IN VARCHAR2,
+      p_contact_no         IN NUMBER,
+      p_ESI_no             IN VARCHAR2,
+      p_PAN                IN VARCHAR2,
+      p_PF_no              IN VARCHAR2,
+      p_PF_UAN_no          IN NUMBER,
+      p_bank               IN VARCHAR2,
+      p_bank_ac_no         IN NUMBER,
+      p_service_start_date IN DATE,
+      p_service_end_date   IN DATE,
+      p_department_id_1    IN OUT NUMBER,
+      p_department_id_2    IN OUT NUMBER,
+      p_mode               IN VARCHAR2);
+  PROCEDURE enter_and_maintain_annual_sal(
+      p_employee_id             IN NUMBER,
+      p_basic                   IN NUMBER,
+      p_hra                     IN NUMBER, --50% of basic
+      p_conveyance              IN NUMBER, --Rs.1500*12 per year
+      p_medical                 IN NUMBER, --15k per year
+      p_lta                     IN NUMBER, --20k per year
+      p_monthly_bonus           IN NUMBER, --20% of basic
+      p_shift_allowance         IN NUMBER, --Rs.0
+      p_additional_personal_pay IN NUMBER, --80% of basic
+      p_salary_year             IN NUMBER,
+      p_mode                    IN VARCHAR2);
+  PROCEDURE enter_and_maintain_deduction(
+      p_employee_id   IN NUMBER,
+      p_tax_deduction IN NUMBER,
+      p_salary_year   IN NUMBER,
+      p_mode          IN VARCHAR2);
+  --PROCEDURE update_deduction(p_number IN NUMBER);
+  PROCEDURE enter_and_maintain_tax(
+      p_employee_id IN NUMBER,
+      p_salary_year IN NUMBER);
+  PROCEDURE enter_and_maintain_attendance(
+      p_employee_id IN NUMBER,
+      p_day         IN NUMBER,
+      p_month       IN NUMBER,
+      p_year        IN NUMBER,
+      p_status      IN VARCHAR2,
+      p_mode        IN VARCHAR2);
+  PROCEDURE enter_and_maintain_leaves(
+      p_employee_id IN NUMBER);
+  PROCEDURE enter_and_maintain_lencash(
+      p_employee_id IN NUMBER);
+  PROCEDURE get_tds(
+      p_employee_id IN NUMBER,
+      p_salary_year IN NUMBER);
+  PROCEDURE payslip(
+      p_employee_id IN NUMBER,
+      p_month       IN NUMBER,
+      p_year        IN NUMBER,
+      p_lencash     IN VARCHAR2);
+END;
+/
